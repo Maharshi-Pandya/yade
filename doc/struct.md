@@ -5,18 +5,18 @@ The root module is named `yade` and it contains packages for encryption and decr
 ```bash
 yade
 +--- cli.go (Driver code file)
-+--- symmetricClassic
-|   +--- caesar.go
-|   +--- hill.go
-|   +--- playfair.go
++--- symclassic
+|   +--- caesar
+|   +--- hill
+|   +--- playfair
 |   ...
-+--- symmetricModern
-|   +--- aes.go
-|   +--- des.go
-|   +--- tripleDes.go
++--- symmodern
+|   +--- aes
+|   +--- des
+|   +--- tripleDes
 |   ...
 +--- utils
-|   +--- matrix.go
+|   +--- utils.go
 ```
 
-Each go file, in the packages, contains an `encrypt` and a `decrypt` function which performs the required operation.
+Each go file, in the packages, contains an `Encrypt` and a `Decrypt` function which performs the required operation.
