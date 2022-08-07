@@ -9,7 +9,21 @@ import (
 
 // ---------- Encryption -------------
 func _encrypt(ptext []byte, key int) []byte {
-	return []byte("testing")
+	var cipher []byte
+
+	for _, ch := range ptext {
+		var tor byte
+		if ch >= 65 && ch <= 90 {
+			tor = (ch+byte(key)-65)%26 + 65
+		} else if ch >= 97 && ch <= 122 {
+			tor = (ch+byte(key)-97)%26 + 97
+		} else {
+			tor = ch
+		}
+
+		cipher = append(cipher, tor)
+	}
+	return cipher
 }
 
 func Encrpyt(filename, ptext string) ([]byte, error) {
