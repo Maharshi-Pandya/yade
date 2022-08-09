@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	cip, _ := caesar.Encrpyt("test.txt", "")
+	cip, _ := caesar.Rot13("", "Hello bro!")
 
 	fmt.Printf("%s\n", cip)
 }
