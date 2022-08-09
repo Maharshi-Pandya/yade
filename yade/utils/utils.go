@@ -19,11 +19,7 @@ func MatPrint(mat [][]byte) {
 
 // Helper function to create a byte square matrix of size N.
 // Input provided by the user.
-func MatCreateSquare(n int) ([][]byte, error) {
-	var keyText string
-	fmt.Printf("Provide the Key matrix text of size %d (no spaces): ", n)
-	fmt.Scanf("%s", &keyText)
-
+func MatCreateSquare(keyText string, n int) ([][]byte, error) {
 	if len(keyText) != n*n {
 		return nil, errors.New(fmt.Sprintf("Invalid Key length for square matrix of size %d", n))
 	}

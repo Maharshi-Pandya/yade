@@ -33,7 +33,11 @@ import (
 
 // Let the user enter the Key
 func userInputKey(keysize int) ([][]byte, error) {
-	return utils.MatCreateSquare(keysize)
+	var keyText string
+	fmt.Printf("Provide the Key matrix text of size %d (no spaces): ", keysize)
+	fmt.Scanf("%s", &keyText)
+
+	return utils.MatCreateSquare(keyText, keysize)
 }
 
 // // Generate random Key matrix from dimensions
