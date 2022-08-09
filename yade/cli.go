@@ -1,13 +1,19 @@
 package main
 
 import (
-	"fmt"
+	"log"
 
-	"github.com/yade/symclassic/caesar"
+	"github.com/yade/symclassic/hill"
+	"github.com/yade/utils"
 )
 
 func main() {
-	cip, _ := caesar.Rot13("", "Hello bro!")
+	// cip, _ := caesar.Encrpyt("", "Hello bro!", -1)
+	mat, err := hill.GetKeyMatrix(1)
 
-	fmt.Printf("%s\n", cip)
+	if err != nil {
+		log.Panic(err)
+	}
+
+	utils.MatPrint(mat)
 }
