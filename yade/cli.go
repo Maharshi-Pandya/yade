@@ -1,19 +1,16 @@
 package main
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/yade/symclassic/hill"
-	"github.com/yade/utils"
 )
 
 func main() {
-	// cip, _ := caesar.Encrpyt("", "Hello bro!", -1)
-	mat, err := hill.GetKeyMatrix(1)
-
+	cip, err := hill.Encrypt("test.txt", "")
 	if err != nil {
-		log.Panic(err)
+		log.Fatal(err)
 	}
-
-	utils.MatPrint(mat)
+	fmt.Printf("\nCipher text: %s\n", cip)
 }
