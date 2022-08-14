@@ -1,4 +1,14 @@
 /*
+Hill cipher is a polygraphic substitution algorithm based on Linear Algebra.
+The algorithm is...
+
+C = (P * K) mod 26
+
+where:
+C = cipher text block (vector)
+P = plain text block (vector)
+K = square matrix (Key)
+
 The symbol space for this implemention of Hill Cipher contains all the uppercase
 alphabets (A - Z) and 3 extra symbols:
 
