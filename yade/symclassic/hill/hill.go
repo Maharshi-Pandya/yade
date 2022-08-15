@@ -2,12 +2,13 @@
 Hill cipher is a polygraphic substitution algorithm based on Linear Algebra.
 The algorithm is...
 
-C = (P * K) mod 26
+C = (P * K) mod n
 
 where:
 C = cipher text block (vector)
 P = plain text block (vector)
 K = square matrix (Key)
+n = number of symbols to be used
 
 The symbol space for this implemention of Hill Cipher contains all the uppercase
 alphabets (A - Z) and 3 extra symbols:
@@ -15,6 +16,16 @@ alphabets (A - Z) and 3 extra symbols:
 - SPACE (' ')
 - Period ('.')
 - Question Mark ('?')
+
+Making n = 29 (Prime) for this implementation.
+Decryption is just the reverse of encryption:
+
+P = (IK * C) mod n
+
+where,
+IK = inverse of Key matrix
+C = cipher text block (vector)
+P = plain text block (vector)
 */
 
 package hill
@@ -26,6 +37,16 @@ import (
 	"os"
 
 	"github.com/yade/utils"
+)
+
+// some constants
+const (
+	SPACE_BYTE    = 26
+	PERIOD_BYTE   = 27
+	QUESTION_BYTE = 28
+	MOD           = 29
+	A_BYTE        = 65
+	Aa_DIFF       = 32
 )
 
 // Return the alphabet list
@@ -55,13 +76,13 @@ func matCreateSquare(keyText string, n int) ([][]byte, error) {
 			mat[i][j] = bKeyText[pos]
 			// for 3 extra symbols
 			if bKeyText[pos] == ' ' {
-				mat[i][j] = 26
+				mat[i][j] = SPACE_BYTE
 			} else if bKeyText[pos] == '.' {
-				mat[i][j] = 27
+				mat[i][j] = PERIOD_BYTE
 			} else if bKeyText[pos] == '?' {
-				mat[i][j] = 28
+				mat[i][j] = QUESTION_BYTE
 			} else {
-				mat[i][j] -= 65
+				mat[i][j] -= A_BYTE
 			}
 			pos++
 		}
@@ -82,7 +103,7 @@ func userInputKey(keysize int) ([][]byte, error) {
 // Generate random Key matrix from dimensions
 func generateRandomKey(matsize int) ([][]byte, error) {
 	fmt.Printf("Generating random Key matrix of size %d:\n", matsize)
-	return utils.MatGenerateSquare(29, matsize)
+	return utils.MatGenerateSquare(MOD, matsize)
 }
 
 // Gets the Key matrix by generating it randomly or taking user input
@@ -117,16 +138,16 @@ func _encrypt(ptext []byte, key [][]byte) ([]byte, error) {
 	// ------ Upper case
 	for i := range pTextMod {
 		if pTextMod[i] >= 97 && pTextMod[i] <= 122 {
-			pTextMod[i] -= 32
+			pTextMod[i] -= Aa_DIFF
 		}
 		if pTextMod[i] == ' ' {
-			pTextMod[i] = 26
+			pTextMod[i] = SPACE_BYTE
 		} else if pTextMod[i] == '.' {
-			pTextMod[i] = 27
+			pTextMod[i] = PERIOD_BYTE
 		} else if pTextMod[i] == '?' {
-			pTextMod[i] = 28
+			pTextMod[i] = QUESTION_BYTE
 		} else {
-			pTextMod[i] -= 65
+			pTextMod[i] -= A_BYTE
 		}
 	}
 
@@ -157,7 +178,7 @@ func _encrypt(ptext []byte, key [][]byte) ([]byte, error) {
 			return nil, err
 		}
 		// modulus 29 (coz of 3 extra symbols)
-		tempEnc1, err := utils.VecModConst(tempEnc, 29)
+		tempEnc1, err := utils.VecModConst(tempEnc, MOD)
 		if err != nil {
 			return nil, err
 		}
